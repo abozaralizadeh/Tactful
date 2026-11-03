@@ -2,7 +2,11 @@
 
 A chat for two people who have a problem to solve. You write what you want to say, in your own words. AI rewrites it into a calmer, more tactful version, you check it, and only that version reaches the other person.
 
-![The other person's view](site/img/other-person-view.jpg)
+![Demo: Alex writes an angry message, checks the calm version and sends it. Sam only sees the calm version.](site/demo.gif)
+
+*Demo of the real app. The rewrite in it is the built in local rewriter (simple rules), not a real AI.* Project page: https://abozaralizadeh.github.io/Tactful/
+
+Source available, free for non-commercial use ([PolyForm Noncommercial 1.0.0](LICENSE)).
 
 ## What it does
 
@@ -22,7 +26,7 @@ Early. It works end to end and has automated tests, but:
 - It has only been tried in a desktop browser, with two windows as two people.
 - The privacy notice and terms in the app are templates. Fill them in and get them reviewed before real use.
 
-There's no hosted demo. The app needs a server and a database, so it can't run as a static page. Run it yourself, it takes a minute.
+There's no live demo you can click. The app needs a server and a database, so it can't run as a static page. The recording above is the real app. Run it yourself, it takes a minute.
 
 ## Quick install
 
@@ -125,14 +129,10 @@ site/            the project page for GitHub Pages
 
 ## Contributing
 
-Issues and pull requests are welcome once the repository is public. Before you send one:
-
-- Run `npm test` and `npm run typecheck`. Both should pass.
-- Keep the product rules in `docs/DESIGN.md` intact. If the rewrite fails nothing is sent, the sender approves every rewrite, originals are deleted once sent or dropped, and message text never goes into a log. Tests cover each one.
-- Don't tune the fake rewriter to pass the 50 message test. The test is for real providers.
-- Keep paid or outside services behind an interface with a local fake, like `server/rewriter/`.
-- Never commit keys or `.env`.
+Issues and pull requests are welcome. Please read [CONTRIBUTING.md](CONTRIBUTING.md) first: contributions are accepted only if you agree that they can be relicensed, commercially too. Security problems go through [SECURITY.md](SECURITY.md), not public issues.
 
 ## License
 
-To be decided.
+Source available, free for non-commercial use under the [PolyForm Noncommercial License 1.0.0](LICENSE). Personal use (study, research, hobby projects and the like) is fine, and so is use by charities, schools, public research bodies and government. The license has the exact terms. Commercial use needs written permission: ask by opening a GitHub issue.
+
+Dependencies keep their own licenses, see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).

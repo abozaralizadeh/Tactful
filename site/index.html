@@ -5,9 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Tactful: talk it through, calmly</title>
     <meta name="description" content="A chat for two people who have a problem to solve. Your message is rewritten to be calmer, and you approve it before it is sent." />
+    <meta property="og:title" content="Tactful: talk it through, calmly" />
+    <meta property="og:description" content="A chat for two people who have a problem to solve. Your message is rewritten to be calmer, and you approve it before it is sent." />
+    <meta property="og:image" content="https://abozaralizadeh.github.io/Tactful/demo.jpg" />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <nav class="top">
+      <div class="wrap row">
+        <span class="brand">Tactful</span>
+        <a href="__REPO_URL__">Code on GitHub</a>
+      </div>
+    </nav>
     <div class="wrap">
       <header class="hero">
         <p class="name">Tactful (working name)</p>
@@ -20,6 +29,17 @@
       </header>
 
       <main>
+        <section aria-labelledby="demo">
+          <h2 id="demo">See it work</h2>
+          <figure>
+            <video controls muted playsinline preload="metadata" poster="demo.jpg" width="1024" height="576">
+              <source src="demo.mp4" type="video/mp4" />
+              <a href="demo.mp4">Download the demo video</a>
+            </video>
+            <figcaption>The real app, about a minute, no sound. <strong>The rewrite in this demo is the built in local rewriter (simple rules), not a real AI.</strong> The names and the topic are made up.</figcaption>
+          </figure>
+        </section>
+
         <section aria-labelledby="how">
           <h2 id="how">How it works</h2>
           <ol class="steps">
@@ -32,18 +52,18 @@
         </section>
 
         <section aria-labelledby="see">
-          <h2 id="see">What it looks like</h2>
+          <h2 id="see">Screens</h2>
           <div class="shots">
             <figure>
-              <img src="img/preview.jpg" alt="The preview screen. A heated message has been rewritten, with buttons to send, edit, try again or cancel." width="480" height="360" />
+              <img src="img/preview.jpg" alt="The preview screen. A heated message has been rewritten, with buttons to send, edit, try again or cancel." width="480" height="360" loading="lazy" />
               <figcaption>What you see before anything is sent. You decide.</figcaption>
             </figure>
             <figure>
-              <img src="img/other-person-view.jpg" alt="The other person's view. The message shows as rewritten, with a box to reply." width="480" height="360" />
+              <img src="img/other-person-view.jpg" alt="The other person's view. The message shows as rewritten, with a box to reply." width="480" height="360" loading="lazy" />
               <figcaption>What the other person gets: the calm version, marked as rewritten.</figcaption>
             </figure>
             <figure class="phone">
-              <img src="img/stopped-on-phone.jpg" alt="On a phone, a threatening message was stopped. A note says it was not sent and points to local emergency numbers and a helpline directory." width="450" height="974" />
+              <img src="img/stopped-on-phone.jpg" alt="On a phone, a threatening message was stopped. A note says it was not sent and points to local emergency numbers and a helpline directory." width="450" height="974" loading="lazy" />
               <figcaption>A threat is stopped, not softened. Nothing is sent.</figcaption>
             </figure>
           </div>
@@ -69,15 +89,20 @@ npm install
 npm run build
 npm start</code></pre>
           <p>Open <code>http://127.0.0.1:3000</code>, start a conversation, and open the invite link in a second browser window to be the other person.</p>
-          <p>To run the tests: <code>npm test</code>. To put it on a Linux server with a service and HTTPS, see the README.</p>
+          <p>To run the tests: <code>npm test</code>. To put it on a Linux server with a service and HTTPS, see the <a href="__REPO_URL__#readme">README</a>.</p>
           <div class="note">
-            <p><strong>Where it stands.</strong> It works end to end, with automated tests. The rewrite runs on a free local fake made of simple rules, so you can try everything without a key. A Claude provider is written but hasn't been tried on the real API yet. There's no hosted demo: the app needs a server and a database, so it can't run as a static page.</p>
+            <p><strong>Where it stands.</strong> It works end to end, with automated tests. The rewrite runs on a free local rewriter made of simple rules, so you can try everything without a key. A Claude provider is written but hasn't been tried on the real API yet. There's no live demo to click: the app needs a server and a database, so it can't run as a static page.</p>
           </div>
+        </section>
+
+        <section aria-labelledby="license">
+          <h2 id="license">License</h2>
+          <p>Source available, free for non-commercial use (<a href="__REPO_URL__/blob/main/LICENSE">PolyForm Noncommercial 1.0.0</a>). Commercial use needs written permission: ask by <a href="__REPO_URL__/issues">opening a GitHub issue</a>.</p>
         </section>
       </main>
 
       <footer>
-        <p><a href="__REPO_URL__">Source code</a> · License: to be decided</p>
+        <p><a href="__REPO_URL__">Code on GitHub</a> · Source available, free for non-commercial use (PolyForm Noncommercial 1.0.0)</p>
       </footer>
     </div>
   </body>

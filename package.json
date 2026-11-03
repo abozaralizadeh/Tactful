@@ -4,6 +4,11 @@
   "private": true,
   "type": "module",
   "description": "A two-person chat where messages are rewritten to be calm before they are delivered.",
+  "license": "SEE LICENSE IN LICENSE",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abozaralizadeh/Tactful.git"
+  },
   "engines": {
     "node": ">=24"
   },
