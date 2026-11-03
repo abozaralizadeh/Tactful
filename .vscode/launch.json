@@ -1,0 +1,39 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Backend (tsx)",
+      "type": "node",
+      "request": "launch",
+      "runtimeArgs": ["--import", "tsx"],
+      "program": "${workspaceFolder}/server/index.ts",
+      "envFile": "${workspaceFolder}/.env",
+      "env": { "WEB_DIR": "dist/web" },
+      "skipFiles": ["<node_internals>/**"],
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "Frontend (Chrome)",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:5173",
+      "webRoot": "${workspaceFolder}/web",
+      "preLaunchTask": "web: vite dev server"
+    },
+    {
+      "name": "Tests",
+      "type": "node",
+      "request": "launch",
+      "runtimeArgs": ["--import", "tsx", "--test", "--test-concurrency=1"],
+      "program": "tests/*.test.ts",
+      "console": "integratedTerminal"
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Backend + Frontend",
+      "configurations": ["Backend (tsx)", "Frontend (Chrome)"],
+      "stopAll": true
+    }
+  ]
+}

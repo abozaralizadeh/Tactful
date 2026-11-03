@@ -1,0 +1,38 @@
+# secrets and real config (keep .env.example)
+.env
+.env.*
+!.env.example
+
+# dependencies and build output
+node_modules/
+.venv/
+dist/
+build/
+target/
+DerivedData/
+.next/
+
+# logs
+logs/
+*.log
+
+# databases and docker volumes
+data/*.db
+data/*.db-*
+*.sqlite
+*.sqlite3
+volumes/
+
+# models and large binaries
+*.gguf
+*.safetensors
+*.onnx
+*.pt
+*.bin
+
+# tool and OS files
+.claude/
+.DS_Store
+
+# generated output of the rewrite test
+reports/

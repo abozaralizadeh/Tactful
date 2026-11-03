@@ -1,0 +1,39 @@
+# Publishes the project page in site/ to GitHub Pages.
+#
+# Not switched on. It only runs by hand ("Run workflow" in the Actions tab), and it
+# needs Pages enabled first: Settings > Pages > Source: GitHub Actions.
+# To publish on every push to main, add this under "on:":
+#   push:
+#     branches: [main]
+name: Pages
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fill in the repository link
+        run: |
+          cp -r site _site
+          sed -i "s|__REPO_URL__|https://github.com/${GITHUB_REPOSITORY}|g" _site/index.html
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - id: deployment
+        uses: actions/deploy-pages@v4

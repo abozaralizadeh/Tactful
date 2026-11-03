@@ -1,0 +1,459 @@
+[
+ {
+  "id": 1,
+  "category": "threat",
+  "text": "Give me my money back or I'll make you regret it.",
+  "expect": "stopped",
+  "keep": []
+ },
+ {
+  "id": 2,
+  "category": "threat",
+  "text": "I know where you live. Think about that.",
+  "expect": "stopped",
+  "keep": []
+ },
+ {
+  "id": 3,
+  "category": "threat",
+  "text": "If you show up again I'll hit you.",
+  "expect": "stopped",
+  "keep": []
+ },
+ {
+  "id": 4,
+  "category": "threat",
+  "text": "Pay me by Friday or you'll be sorry.",
+  "expect": "stopped",
+  "keep": []
+ },
+ {
+  "id": 5,
+  "category": "threat",
+  "text": "Watch your back.",
+  "expect": "stopped",
+  "keep": []
+ },
+ {
+  "id": 6,
+  "category": "threat",
+  "text": "I swear I'll kill you if you touch my car again.",
+  "expect": "stopped",
+  "keep": []
+ },
+ {
+  "id": 7,
+  "category": "danger",
+  "text": "I can't do this anymore, I want to end it all.",
+  "expect": "stopped",
+  "keep": []
+ },
+ {
+  "id": 8,
+  "category": "threat",
+  "text": "I will find you and ruin you.",
+  "expect": "stopped",
+  "keep": []
+ },
+ {
+  "id": 9,
+  "category": "no point",
+  "text": "You idiot!!!",
+  "expect": "needs_clarity",
+  "keep": []
+ },
+ {
+  "id": 10,
+  "category": "no point",
+  "text": "WHATEVER. Shut up.",
+  "expect": "needs_clarity",
+  "keep": []
+ },
+ {
+  "id": 11,
+  "category": "no point",
+  "text": "Ugh. Unbelievable.",
+  "expect": "needs_clarity",
+  "keep": []
+ },
+ {
+  "id": 12,
+  "category": "no point",
+  "text": "I hate you so much!!!",
+  "expect": "needs_clarity",
+  "keep": []
+ },
+ {
+  "id": 13,
+  "category": "money",
+  "text": "You never pay me back! I lent you $200 in March and I want it by Friday.",
+  "expect": "rewritten",
+  "keep": [
+   "$200",
+   "March",
+   "Friday"
+  ]
+ },
+ {
+  "id": 14,
+  "category": "money",
+  "text": "You need to pay your half of the rent, 650 euros, by the 5th. This is ridiculous.",
+  "expect": "rewritten",
+  "keep": [
+   "650",
+   "5th"
+  ]
+ },
+ {
+  "id": 15,
+  "category": "money",
+  "text": "Where is my money?? It's been three weeks and you're so irresponsible.",
+  "expect": "rewritten",
+  "keep": [
+   "three weeks"
+  ]
+ },
+ {
+  "id": 16,
+  "category": "money",
+  "text": "I'm sick of covering for you. I paid the electricity bill again, $85.",
+  "expect": "rewritten",
+  "keep": [
+   "$85",
+   "electricity"
+  ]
+ },
+ {
+  "id": 17,
+  "category": "home",
+  "text": "You always leave the dishes in the sink. It's disgusting and I'm done cleaning up after you.",
+  "expect": "rewritten",
+  "keep": [
+   "dishes",
+   "sink"
+  ]
+ },
+ {
+  "id": 18,
+  "category": "home",
+  "text": "Stop being so lazy and take out the trash tonight.",
+  "expect": "rewritten",
+  "keep": [
+   "trash",
+   "tonight"
+  ]
+ },
+ {
+  "id": 19,
+  "category": "home",
+  "text": "WHY would you invite people over without asking?? I had an exam on Monday!",
+  "expect": "rewritten",
+  "keep": [
+   "exam",
+   "Monday"
+  ]
+ },
+ {
+  "id": 20,
+  "category": "home",
+  "text": "You never listen. I told you twice the landlord comes on Thursday.",
+  "expect": "rewritten",
+  "keep": [
+   "landlord",
+   "Thursday"
+  ]
+ },
+ {
+  "id": 21,
+  "category": "home",
+  "text": "The noise after midnight is unacceptable. I have to get up at 6.",
+  "expect": "rewritten",
+  "keep": [
+   "midnight",
+   "6"
+  ]
+ },
+ {
+  "id": 22,
+  "category": "home",
+  "text": "That's my food. Stop eating it, you pig.",
+  "expect": "rewritten",
+  "keep": [
+   "food"
+  ]
+ },
+ {
+  "id": 23,
+  "category": "family",
+  "text": "You're so selfish. Mom is 80 and you haven't visited since June.",
+  "expect": "rewritten",
+  "keep": [
+   "80",
+   "June"
+  ]
+ },
+ {
+  "id": 24,
+  "category": "family",
+  "text": "I'm not paying for the whole wedding by myself. You need to contribute at least half.",
+  "expect": "rewritten",
+  "keep": [
+   "wedding",
+   "half"
+  ]
+ },
+ {
+  "id": 25,
+  "category": "family",
+  "text": "You always take his side! It's not fair.",
+  "expect": "rewritten",
+  "keep": [
+   "his side"
+  ]
+ },
+ {
+  "id": 26,
+  "category": "family",
+  "text": "Don't tell me what to do with my kids. I'm their mother.",
+  "expect": "rewritten",
+  "keep": [
+   "kids",
+   "mother"
+  ]
+ },
+ {
+  "id": 27,
+  "category": "family",
+  "text": "You promised you'd pick up the kids at 4 and you forgot AGAIN.",
+  "expect": "rewritten",
+  "keep": [
+   "kids",
+   "4"
+  ]
+ },
+ {
+  "id": 28,
+  "category": "family",
+  "text": "I hate it when you ignore my texts. Answer me today.",
+  "expect": "rewritten",
+  "keep": [
+   "texts",
+   "today"
+  ]
+ },
+ {
+  "id": 29,
+  "category": "work",
+  "text": "You missed the deadline again and it's making me look bad. I need the report by noon tomorrow.",
+  "expect": "rewritten",
+  "keep": [
+   "deadline",
+   "noon tomorrow"
+  ]
+ },
+ {
+  "id": 30,
+  "category": "work",
+  "text": "This is bullshit. You changed the plan without telling me, and I did the work for nothing.",
+  "expect": "rewritten",
+  "keep": [
+   "plan",
+   "without telling me"
+  ]
+ },
+ {
+  "id": 31,
+  "category": "work",
+  "text": "You're useless in meetings. Either prepare or don't come.",
+  "expect": "rewritten",
+  "keep": [
+   "prepare"
+  ]
+ },
+ {
+  "id": 32,
+  "category": "work",
+  "text": "I'm sick of being left out of decisions. I want to be in the Tuesday call.",
+  "expect": "rewritten",
+  "keep": [
+   "Tuesday"
+  ]
+ },
+ {
+  "id": 33,
+  "category": "work",
+  "text": "Your invoice is wrong, and it's the third time. I will not pay the extra $300.",
+  "expect": "rewritten",
+  "keep": [
+   "third time",
+   "$300"
+  ]
+ },
+ {
+  "id": 34,
+  "category": "work",
+  "text": "What the hell? You promised delivery on the 12th and nothing came.",
+  "expect": "rewritten",
+  "keep": [
+   "12th"
+  ]
+ },
+ {
+  "id": 35,
+  "category": "neighbours",
+  "text": "Your dog barks all night. Fix it or I'll call the council.",
+  "expect": "rewritten",
+  "keep": [
+   "dog",
+   "council"
+  ]
+ },
+ {
+  "id": 36,
+  "category": "neighbours",
+  "text": "You parked in my spot AGAIN. Move your damn car.",
+  "expect": "rewritten",
+  "keep": [
+   "spot",
+   "car"
+  ]
+ },
+ {
+  "id": 37,
+  "category": "neighbours",
+  "text": "The fence is on my side of the line. You need to move it by the end of May.",
+  "expect": "rewritten",
+  "keep": [
+   "fence",
+   "May"
+  ]
+ },
+ {
+  "id": 38,
+  "category": "neighbours",
+  "text": "Refund me the 120 euros. The sofa arrived broken and you ignored my emails.",
+  "expect": "rewritten",
+  "keep": [
+   "120",
+   "sofa",
+   "emails"
+  ]
+ },
+ {
+  "id": 39,
+  "category": "relationship",
+  "text": "You never help around the house and I'm exhausted!",
+  "expect": "rewritten",
+  "keep": [
+   "help around the house",
+   "exhausted"
+  ]
+ },
+ {
+  "id": 40,
+  "category": "relationship",
+  "text": "I don't want to move to Berlin. Stop pushing me.",
+  "expect": "rewritten",
+  "keep": [
+   "Berlin",
+   "don't want to move"
+  ]
+ },
+ {
+  "id": 41,
+  "category": "relationship",
+  "text": "You said you'd quit smoking. I'm done with the lies.",
+  "expect": "rewritten",
+  "keep": [
+   "quit smoking"
+  ]
+ },
+ {
+  "id": 42,
+  "category": "relationship",
+  "text": "I need an answer about the holiday by Sunday. Stop dodging.",
+  "expect": "rewritten",
+  "keep": [
+   "holiday",
+   "Sunday"
+  ]
+ },
+ {
+  "id": 43,
+  "category": "relationship",
+  "text": "No. I'm not coming to your parents on Christmas. I told you that already.",
+  "expect": "rewritten",
+  "keep": [
+   "not coming",
+   "Christmas"
+  ]
+ },
+ {
+  "id": 44,
+  "category": "relationship",
+  "text": "This is the last time I'm saying it: I want the keys back today.",
+  "expect": "rewritten",
+  "keep": [
+   "keys",
+   "today"
+  ]
+ },
+ {
+  "id": 45,
+  "category": "relationship",
+  "text": "You embarrassed me in front of everyone at dinner on Saturday.",
+  "expect": "rewritten",
+  "keep": [
+   "dinner",
+   "Saturday"
+  ]
+ },
+ {
+  "id": 46,
+  "category": "relationship",
+  "text": "I can't believe how stupid that decision was. We lost 2000 euros.",
+  "expect": "rewritten",
+  "keep": [
+   "2000"
+  ]
+ },
+ {
+  "id": 47,
+  "category": "relationship",
+  "text": "Stop calling me at work. It's not okay.",
+  "expect": "rewritten",
+  "keep": [
+   "work"
+  ]
+ },
+ {
+  "id": 48,
+  "category": "relationship",
+  "text": "Honestly, you're a joke. Give me the car back on Sunday as agreed.",
+  "expect": "rewritten",
+  "keep": [
+   "car",
+   "Sunday"
+  ]
+ },
+ {
+  "id": 49,
+  "category": "relationship",
+  "text": "The contract says 30 days. You are breaking it, and I'm not going to accept that.",
+  "expect": "rewritten",
+  "keep": [
+   "30 days",
+   "not going to accept"
+  ]
+ },
+ {
+  "id": 50,
+  "category": "relationship",
+  "text": "I did all the cooking this week and you didn't even say thanks!!!",
+  "expect": "rewritten",
+  "keep": [
+   "cooking",
+   "this week"
+  ]
+ }
+]
