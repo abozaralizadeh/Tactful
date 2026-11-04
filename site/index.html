@@ -3,107 +3,279 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Tactful: talk it through, calmly</title>
-    <meta name="description" content="A chat for two people who have a problem to solve. Your message is rewritten to be calmer, and you approve it before it is sent." />
-    <meta property="og:title" content="Tactful: talk it through, calmly" />
-    <meta property="og:description" content="A chat for two people who have a problem to solve. Your message is rewritten to be calmer, and you approve it before it is sent." />
-    <meta property="og:image" content="https://abozaralizadeh.github.io/Tactful/demo.jpg" />
+    <title>Tactful: say what you mean, without the heat</title>
+    <meta name="description" content="A chat for two people with a problem to solve. Write it the way it feels. Tactful rewrites it calmer, you check it, and only that version reaches the other person." />
+    <meta name="theme-color" content="#F6F1E9" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#111614" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Tactful: say what you mean, without the heat" />
+    <meta property="og:description" content="Write it the way it feels. Tactful rewrites it calmer, you check it, and only that version reaches the other person." />
+    <meta property="og:url" content="https://abozaralizadeh.github.io/Tactful/" />
+    <meta property="og:image" content="https://abozaralizadeh.github.io/Tactful/og.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Tactful. Say what you mean, without the heat. A jagged coral line settles into a calm teal wave." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Tactful: say what you mean, without the heat" />
+    <meta name="twitter:description" content="Write it the way it feels. Tactful rewrites it calmer, you check it, and only that version reaches the other person." />
+    <meta name="twitter:image" content="https://abozaralizadeh.github.io/Tactful/og.jpg" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500..700&display=swap" />
     <link rel="stylesheet" href="style.css" />
+    <script src="main.js" defer></script>
   </head>
   <body>
-    <nav class="top">
-      <div class="wrap row">
-        <span class="brand">Tactful</span>
-        <a href="__REPO_URL__">Code on GitHub</a>
-      </div>
-    </nav>
-    <div class="wrap">
-      <header class="hero">
-        <p class="name">Tactful (working name)</p>
-        <h1>Talk it through, calmly.</h1>
-        <p class="lead">A chat for two people who have a problem to solve. You write what you want to say, in your own words. AI rewrites it into a calmer, more tactful version. You check it, and only that version reaches the other person.</p>
-        <div class="actions">
-          <a class="button" href="#install">Quick install</a>
-          <a class="button secondary" href="__REPO_URL__">See the code</a>
-        </div>
-      </header>
+    <a class="skip" href="#main">Skip to the content</a>
 
-      <main>
-        <section aria-labelledby="demo">
-          <h2 id="demo">See it work</h2>
-          <figure>
-            <video controls muted playsinline preload="metadata" poster="demo.jpg" width="1024" height="576">
-              <source src="demo.mp4" type="video/mp4" />
-              <a href="demo.mp4">Download the demo video</a>
-            </video>
-            <figcaption>The real app, about a minute, no sound. <strong>The rewrite in this demo is the built in local rewriter (simple rules), not a real AI.</strong> The names and the topic are made up.</figcaption>
-          </figure>
-        </section>
-
-        <section aria-labelledby="how">
-          <h2 id="how">How it works</h2>
-          <ol class="steps">
-            <li>One person starts a chat and sends the other a link. No accounts, no passwords.</li>
-            <li>You write a message, the way you would say it.</li>
-            <li>AI rewrites it. You read the new version and send it, edit it, ask for another, or cancel.</li>
-            <li>The other person only ever sees the rewritten version, marked as rewritten.</li>
-          </ol>
-          <p>It's for adults with everyday disagreements: money, housing, family, work. It is not therapy, legal advice or mediation.</p>
-        </section>
-
-        <section aria-labelledby="see">
-          <h2 id="see">Screens</h2>
-          <div class="shots">
-            <figure>
-              <img src="img/preview.jpg" alt="The preview screen. A heated message has been rewritten, with buttons to send, edit, try again or cancel." width="480" height="360" loading="lazy" />
-              <figcaption>What you see before anything is sent. You decide.</figcaption>
-            </figure>
-            <figure>
-              <img src="img/other-person-view.jpg" alt="The other person's view. The message shows as rewritten, with a box to reply." width="480" height="360" loading="lazy" />
-              <figcaption>What the other person gets: the calm version, marked as rewritten.</figcaption>
-            </figure>
-            <figure class="phone">
-              <img src="img/stopped-on-phone.jpg" alt="On a phone, a threatening message was stopped. A note says it was not sent and points to local emergency numbers and a helpline directory." width="450" height="974" loading="lazy" />
-              <figcaption>A threat is stopped, not softened. Nothing is sent.</figcaption>
-            </figure>
-          </div>
-        </section>
-
-        <section aria-labelledby="rules">
-          <h2 id="rules">The rules it keeps</h2>
-          <ul class="rules">
-            <li>If the rewrite fails, nothing is sent. The original never reaches the other person.</li>
-            <li>The sender approves every rewrite. Edits are checked again.</li>
-            <li>Both people know messages are rewritten, and every message says so.</li>
-            <li>Originals are deleted once the message is sent or dropped. Message text never goes into a log.</li>
-            <li>Chats are deleted 30 days after they close.</li>
+    <header class="nav">
+      <div class="wrap nav-row">
+        <a class="brand" href="#top" aria-label="Tactful, back to the top">
+          <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="currentColor"/><path d="M7 17.5 L9.5 12 L12 21 L14.5 14 Q18 10 21.5 16 T26 15" fill="none" style="stroke: var(--paper)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>Tactful</span>
+        </a>
+        <nav aria-label="Sections">
+          <ul class="nav-links">
+            <li><a href="#how">How it works</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#install">Install</a></li>
+            <li><a href="#faq">FAQ</a></li>
           </ul>
-        </section>
+        </nav>
+        <a class="btn btn-small" href="__REPO_URL__">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+          <span>GitHub</span>
+        </a>
+      </div>
+    </header>
 
-        <section aria-labelledby="install">
-          <h2 id="install">Quick install</h2>
-          <p>You need Node.js 24 or newer.</p>
-<pre><code>git clone __REPO_URL__.git
+    <main id="main">
+      <section class="hero" id="top">
+        <div class="wrap hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow">A chat for two people with a problem to solve</p>
+            <h1>Say what you mean, <em>without the&nbsp;heat.</em></h1>
+            <p class="lede">Write it the way it feels. Tactful rewrites it calmer, keeps every fact and every ask, and shows you the new version first. Only what you approve reaches the other person.</p>
+            <div class="cta">
+              <a class="btn" href="__REPO_URL__">View on GitHub</a>
+              <a class="btn btn-ghost" href="#install">Install</a>
+            </div>
+            <p class="fine">Source available, free for non-commercial use. Runs on your own machine in about a minute.</p>
+          </div>
+
+          <figure class="window hero-demo">
+            <div class="window-bar" aria-hidden="true">
+              <span class="dots"><i></i><i></i><i></i></span>
+              <span class="address">127.0.0.1:3000</span>
+            </div>
+            <video class="lazy-video" muted loop playsinline preload="none" poster="img/demo-poster.webp" width="1024" height="576" aria-label="Recording of the real app: Alex writes an angry message, checks the calm version and sends it. Sam only sees the calm version. Then a threat is stopped.">
+              <source data-src="demo.mp4" type="video/mp4" />
+            </video>
+            <button class="play-toggle" type="button" aria-pressed="false" hidden>Pause</button>
+          </figure>
+        </div>
+
+        <div class="cooldown" aria-hidden="true">
+          <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="heat-to-calm" x1="0" x2="1" y1="0" y2="0">
+                <stop offset="0" style="stop-color: var(--heat)" />
+                <stop offset="0.28" style="stop-color: var(--heat)" />
+                <stop offset="0.48" style="stop-color: var(--calm)" />
+                <stop offset="1" style="stop-color: var(--calm)" />
+              </linearGradient>
+            </defs>
+            <path class="cooldown-path" pathLength="1" d="M0 62 L28 18 L52 104 L78 12 L102 108 L128 22 L152 98 L178 30 L202 92 L228 38 L252 84 L278 46 L302 76 L328 52 L352 70 L378 56 Q 430 40 482 60 T 586 60 T 690 60 T 794 60 T 898 60 T 1002 60 T 1106 60 T 1210 60 T 1314 60 T 1440 60" />
+          </svg>
+          <div class="wrap cooldown-labels">
+            <span class="label-heat">What you type</span>
+            <span class="label-calm">What they read</span>
+          </div>
+        </div>
+        <p class="wrap demo-note">The demo is the real app, recorded. The rewrite in it comes from the built in rule based rewriter, not a real AI. The names are made up.</p>
+      </section>
+
+      <section class="section" aria-labelledby="try">
+        <div class="wrap narrow">
+          <h2 id="try" class="reveal">Same point. Less heat.</h2>
+          <p class="section-lede reveal">This is the exact message from the demo, and the exact rewrite the app sent. Nothing about the lamp or the money changed. Only the tone did.</p>
+
+          <div class="cool-card reveal" data-state="hot">
+            <div class="cool-head">
+              <span class="cool-tag"><span class="tag-hot">Alex typed</span><span class="tag-calm">Sam received</span></span>
+              <button class="btn btn-small" type="button" id="cool-btn" aria-pressed="false" aria-controls="cool-text">Cool it down</button>
+            </div>
+            <p class="cool-text" id="cool-text" aria-live="polite">
+              <span class="hot-text">You never pay me back, you idiot. You broke my lamp and I want the $40 by Friday.</span>
+              <span class="calm-text">It rarely seems like you pay me back. You broke my lamp and I want the $40 by Friday.</span>
+            </p>
+            <svg class="cool-line" viewBox="0 0 600 40" preserveAspectRatio="none" aria-hidden="true">
+              <path class="line-hot" d="M0 20 L20 4 L38 36 L56 2 L74 38 L92 6 L110 34 L128 8 L146 32 L164 10 L182 30 L200 12 L218 28 L236 14 L254 26 L272 16 L290 24 L308 6 L326 34 L344 4 L362 36 L380 8 L398 32 L416 10 L434 30 L452 14 L470 26 L488 6 L506 34 L524 10 L542 30 L560 14 L578 26 L600 20" />
+              <path class="line-calm" d="M0 20 Q 37.5 10 75 20 T 150 20 T 225 20 T 300 20 T 375 20 T 450 20 T 525 20 T 600 20" />
+            </svg>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="how" aria-labelledby="how-title">
+        <div class="wrap">
+          <p class="kicker reveal">How it works</p>
+          <h2 id="how-title" class="reveal">Three steps. You stay in charge of every one.</h2>
+          <ol class="steps">
+            <li class="step reveal">
+              <div class="step-copy">
+                <span class="step-num">1</span>
+                <h3>Say it the way it feels</h3>
+                <p>Start a chat, send the other person one link, and write in your own words. No accounts, no passwords, nothing to install for them.</p>
+              </div>
+              <figure class="shot"><img src="img/step-write.webp" width="800" height="392" loading="lazy" decoding="async" alt="Alex has typed: You never pay me back, you idiot. You broke my lamp and I want the $40 by Friday. A Rewrite button sits underneath." /></figure>
+            </li>
+            <li class="step reveal">
+              <div class="step-copy">
+                <span class="step-num">2</span>
+                <h3>Check the calm version</h3>
+                <p>Tactful keeps your facts, dates and asks, and drops the insults. Send it, edit it, ask for another try, or cancel. Edits get checked again.</p>
+              </div>
+              <figure class="shot"><img src="img/step-check.webp" width="800" height="440" loading="lazy" decoding="async" alt="The preview: This is what will be sent. It rarely seems like you pay me back. You broke my lamp and I want the $40 by Friday. Buttons: Send, Edit, Try again, Cancel." /></figure>
+            </li>
+            <li class="step reveal">
+              <div class="step-copy">
+                <span class="step-num">3</span>
+                <h3>They only see what you approved</h3>
+                <p>The other person gets the calm version, live, marked as rewritten. They never see your original, and it's deleted the moment you send.</p>
+              </div>
+              <figure class="shot"><img src="img/step-deliver.webp" width="800" height="330" loading="lazy" decoding="async" alt="Sam's view: a message from Alex reading It rarely seems like you pay me back. You broke my lamp and I want the $40 by Friday, labelled rewritten." /></figure>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="section section-alt" id="features" aria-labelledby="features-title">
+        <div class="wrap">
+          <p class="kicker reveal">Features</p>
+          <h2 id="features-title" class="reveal">Built so the calm version can be trusted.</h2>
+          <div class="features">
+            <article class="feature feature-wide reveal">
+              <div>
+                <h3>Threats get stopped, not polished</h3>
+                <p>A threat doesn't get better with nicer words, so it isn't sent at all. The sender is told why, and sees where to find help if someone may be in danger.</p>
+              </div>
+              <figure class="shot"><img src="img/stopped.webp" width="800" height="428" loading="lazy" decoding="async" alt="A message saying Pay me or I'll hurt you was stopped. The app says it may involve someone being in danger, so it was not sent, and points to local emergency numbers and findahelpline.com." /></figure>
+            </article>
+
+            <article class="feature reveal">
+              <svg class="icon" viewBox="0 0 40 40" aria-hidden="true"><path d="M6 20h9l3-6 4 12 3-6h9"/><path d="M28 9l6 6M34 9l-6 6"/></svg>
+              <h3>If it fails, nothing goes</h3>
+              <p>No AI answer, a timeout, a bad reply: in every case nothing is sent. Your original can't slip through by accident.</p>
+            </article>
+            <article class="feature reveal">
+              <svg class="icon" viewBox="0 0 40 40" aria-hidden="true"><path d="M8 11h24v14H18l-7 6v-6H8z"/><path d="M14 18h12"/></svg>
+              <h3>Nobody is fooled</h3>
+              <p>Both people agree to rewriting before they start, and every single message carries a "rewritten" label.</p>
+            </article>
+            <article class="feature reveal">
+              <svg class="icon" viewBox="0 0 40 40" aria-hidden="true"><path d="M15 23a6 6 0 0 1 0-8l4-4a6 6 0 0 1 8 8l-2 2"/><path d="M25 17a6 6 0 0 1 0 8l-4 4a6 6 0 0 1-8-8l2-2"/></svg>
+              <h3>One link, no accounts</h3>
+              <p>Asking someone to sign up in the middle of an argument loses them. They tap a link that works once, and they're in.</p>
+            </article>
+            <article class="feature reveal">
+              <svg class="icon" viewBox="0 0 40 40" aria-hidden="true"><path d="M11 13h18M17 13v-3h6v3M13 13l1.5 18h11L27 13"/><path d="M18 18v8M22 18v8"/></svg>
+              <h3>Originals don't stick around</h3>
+              <p>Your first draft is deleted when you send or cancel. Message text never goes into a log, and chats are deleted 30 days after they close.</p>
+            </article>
+            <article class="feature reveal">
+              <svg class="icon" viewBox="0 0 40 40" aria-hidden="true"><rect x="7" y="9" width="26" height="18" rx="3"/><path d="M15 33h10M20 27v6"/><path d="M13 18l3 3 5-6"/></svg>
+              <h3>Yours to run</h3>
+              <p>One small Node service with SQLite. Run it on your laptop or a Linux box with one setup script. Swap in the AI provider you trust.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="install" aria-labelledby="install-title">
+        <div class="wrap narrow">
+          <p class="kicker reveal">Install</p>
+          <h2 id="install-title" class="reveal">Running in about a minute.</h2>
+          <p class="section-lede reveal">You need Node.js 24 or newer. It starts with the built in rewriter, so you can try everything for free before adding an AI key.</p>
+
+          <div class="code reveal">
+            <div class="code-head"><span>Run it on your machine</span><button class="copy" type="button" data-copy="c1">Copy</button></div>
+<pre id="c1"><code>git clone __REPO_URL__.git
 cd Tactful
 npm install
 npm run build
 npm start</code></pre>
-          <p>Open <code>http://127.0.0.1:3000</code>, start a conversation, and open the invite link in a second browser window to be the other person.</p>
-          <p>To run the tests: <code>npm test</code>. To put it on a Linux server with a service and HTTPS, see the <a href="__REPO_URL__#readme">README</a>.</p>
-          <div class="note">
-            <p><strong>Where it stands.</strong> It works end to end, with automated tests. The rewrite runs on a free local rewriter made of simple rules, so you can try everything without a key. A Claude provider is written but hasn't been tried on the real API yet. There's no live demo to click: the app needs a server and a database, so it can't run as a static page.</p>
           </div>
-        </section>
+          <p class="after-code reveal">Open <code>http://127.0.0.1:3000</code>, start a chat, and open the invite link in a second window to be the other person.</p>
 
-        <section aria-labelledby="license">
-          <h2 id="license">License</h2>
-          <p>Source available, free for non-commercial use (<a href="__REPO_URL__/blob/main/LICENSE">PolyForm Noncommercial 1.0.0</a>). Commercial use needs written permission: ask by <a href="__REPO_URL__/issues">opening a GitHub issue</a>.</p>
-        </section>
-      </main>
+          <div class="code reveal">
+            <div class="code-head"><span>Run the tests</span><button class="copy" type="button" data-copy="c2">Copy</button></div>
+<pre id="c2"><code>npm test
+npm run typecheck</code></pre>
+          </div>
 
-      <footer>
-        <p><a href="__REPO_URL__">Code on GitHub</a> · Source available, free for non-commercial use (PolyForm Noncommercial 1.0.0)</p>
-      </footer>
-    </div>
+          <div class="code reveal">
+            <div class="code-head"><span>Put it on a Linux server, with HTTPS</span><button class="copy" type="button" data-copy="c3">Copy</button></div>
+<pre id="c3"><code>sudo DOMAIN=chat.example.com ./setup_service.sh
+journalctl -u tactful.service -f</code></pre>
+          </div>
+          <p class="after-code reveal">Run the script again any time to update and restart. Settings live in <code>.env</code>, and the <a href="__REPO_URL__#readme">README</a> lists them all.</p>
+        </div>
+      </section>
+
+      <section class="section section-alt" id="faq" aria-labelledby="faq-title">
+        <div class="wrap narrow">
+          <p class="kicker reveal">FAQ</p>
+          <h2 id="faq-title" class="reveal">Straight answers, including the limits.</h2>
+          <div class="faq reveal">
+            <details>
+              <summary>Is the AI in the demo real?</summary>
+              <p>No. The recording uses the built in rewriter, a small set of rules, so it runs free and offline. A Claude provider is in the code, but it hasn't been tried against the real API yet. You bring your own key.</p>
+            </details>
+            <details>
+              <summary>Does the other person know messages are rewritten?</summary>
+              <p>Yes. They agree to it before they join, and every message is labelled "rewritten". Hidden rewriting would feel like a trick, and it would be one.</p>
+            </details>
+            <details>
+              <summary>Can the server read my messages?</summary>
+              <p>Yes, it has to, to rewrite them. So there's no end to end encryption, and the app doesn't pretend there is. Originals are deleted once a message is sent or dropped, and message text never goes into a log.</p>
+            </details>
+            <details>
+              <summary>Who is it not for?</summary>
+              <p>Situations involving abuse, violence or danger. Softening messages there could hide a real risk. It's also not therapy, legal advice or mediation. It's for adults with everyday disagreements: money, housing, family, work.</p>
+            </details>
+            <details>
+              <summary>Is it free?</summary>
+              <p>Free for non-commercial use under PolyForm Noncommercial 1.0.0. That covers personal use, study and hobby projects, and use by charities, schools, public research bodies and government. For anything commercial, open an issue and ask.</p>
+            </details>
+            <details>
+              <summary>Can I run it for other people?</summary>
+              <p>For non-commercial use, yes. Plug in a real AI provider first, and fill in the privacy notice and terms templates in the app and have them reviewed. It's early software and hasn't had a security review.</p>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <section class="closing">
+        <div class="wrap closing-inner reveal">
+          <h2>Have the conversation you've been putting off.</h2>
+          <div class="cta">
+            <a class="btn" href="__REPO_URL__">View on GitHub</a>
+            <a class="btn btn-ghost" href="#install">Install</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="wrap footer-row">
+        <p><a href="__REPO_URL__">Code on GitHub</a> · Source available, free for non-commercial use (<a href="__REPO_URL__/blob/main/LICENSE">PolyForm Noncommercial 1.0.0</a>) · Commercial use: <a href="__REPO_URL__/issues">ask in an issue</a></p>
+        <p>Made by <a href="https://abozaralizadeh.github.io">Abozar Alizadeh</a></p>
+      </div>
+    </footer>
   </body>
 </html>
