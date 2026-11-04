@@ -174,6 +174,14 @@ export class Service {
     if (used.n >= this.config.dailyRewriteCap) {
       throw new HttpError(429, 'daily_cap', 'The service is very busy today. Please try again tomorrow.');
     }
+    if (this.config.dailyTokenBudget > 0) {
+      const tokens = this.db
+        .prepare('SELECT COALESCE(SUM(COALESCE(input_tokens, 0) + COALESCE(output_tokens, 0)), 0) AS n FROM rewrite_events WHERE created_at >= ?')
+        .get(dayStart) as { n: number };
+      if (tokens.n >= this.config.dailyTokenBudget) {
+        throw new HttpError(429, 'daily_budget', "Today's AI allowance for this demo is used up, so nothing was sent. Please come back tomorrow.");
+      }
+    }
 
     const recent = (
       this.db

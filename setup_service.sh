@@ -4,8 +4,17 @@
 #   sudo ./setup_service.sh                       first time, and every time you update
 #   sudo DOMAIN=chat.example.com ./setup_service.sh   also sets up Caddy for HTTPS on that domain
 #
+# Behind an nginx you already run, under a path such as /tactful/ (no Caddy):
+#
+#   sudo SERVICE_NAME=idea-tactful PORT=8601 BASE_PATH=/tactful/ \
+#        NGINX_SNIPPET=/etc/nginx/max.d/tactful.conf ./setup_service.sh
+#
+#   It writes that one location file plus a rate limit zone in /etc/nginx/conf.d/, checks
+#   nginx -t, and removes both again if the check fails. Your server block must include
+#   the snippet folder (for example: include /etc/nginx/max.d/*.conf;).
+#
 # Running it again pulls in your changes, rebuilds, and restarts the service.
-# Logs:  journalctl -u tactful.service -f     (a size limited copy is also in logs/tactful.log)
+# Logs:  journalctl -u <service>.service -f   (default tactful; a size limited copy is also in logs/tactful.log)
 set -euo pipefail
 
 if [[ $EUID -ne 0 ]]; then
@@ -18,10 +27,16 @@ cd "$ROOT"
 # The service runs as whoever owns the project folder, so it can read and write it.
 RUN_USER="${SERVICE_USER:-$(stat -c %U "$ROOT")}"
 RUN_GROUP="$(id -gn "$RUN_USER")"
-SERVICE=tactful
+SERVICE="${SERVICE_NAME:-tactful}"
 NODE_MAJOR=24
 
 as_user() { sudo -u "$RUN_USER" -H env PATH="$PATH" "$@"; }
+
+if [[ -d .git && "${GIT_PULL:-true}" == true ]]; then
+  echo "==> Latest code"
+  # Fast forward only, so local changes are never thrown away. Set GIT_PULL=false to skip.
+  as_user git pull --ff-only || echo "    could not fast forward, building what is here"
+fi
 
 echo "==> Node.js ${NODE_MAJOR}"
 if ! command -v node >/dev/null || [[ "$(node -p 'process.versions.node.split(".")[0]')" -lt $NODE_MAJOR ]]; then
@@ -51,6 +66,10 @@ set_env() { # set_env KEY VALUE  (adds or replaces the line)
   if grep -q "^$1=" .env; then sed -i "s|^$1=.*|$1=$2|" .env; else echo "$1=$2" >> .env; fi
 }
 
+[[ -n "${PORT:-}" ]] && set_env PORT "$PORT"
+# Behind a local proxy, trust only the proxy on this machine for the client address.
+[[ -n "${NGINX_SNIPPET:-}" ]] && set_env TRUST_PROXY 127.0.0.1
+
 echo "==> Dependencies and build"
 as_user npm ci
 as_user npm run build
@@ -61,7 +80,7 @@ echo "==> Service"
 NODE_BIN="$(command -v node)"
 cat > "/etc/systemd/system/${SERVICE}.service" <<UNIT
 [Unit]
-Description=Tactful
+Description=Tactful (${SERVICE})
 After=network.target
 
 [Service]
@@ -104,6 +123,52 @@ CADDY
   set_env TRUST_PROXY true
   systemctl enable caddy
   systemctl reload caddy || systemctl restart caddy
+fi
+
+if [[ -n "${NGINX_SNIPPET:-}" ]]; then
+  BASE="${BASE_PATH:-/tactful/}"
+  [[ "$BASE" == /*/ ]] || { echo "BASE_PATH must start and end with a slash, like /tactful/" >&2; exit 1; }
+  APP_PORT="$(grep -E '^PORT=' .env | cut -d= -f2)"
+  ZONE="${SERVICE//-/_}"
+  ZONE_FILE="/etc/nginx/conf.d/${SERVICE}-limits.conf"
+  echo "==> nginx: ${BASE} -> 127.0.0.1:${APP_PORT}"
+  grep -qE 'include\s+/etc/nginx/conf\.d/\*\.conf' /etc/nginx/nginx.conf || { echo "nginx.conf does not include conf.d, so the rate limit zone can't be added. Nothing changed." >&2; exit 1; }
+  mkdir -p "$(dirname "$NGINX_SNIPPET")"
+  had_snippet=false; had_zone=false
+  [[ -f "$NGINX_SNIPPET" ]] && { cp "$NGINX_SNIPPET" "$NGINX_SNIPPET.bak"; had_snippet=true; }
+  [[ -f "$ZONE_FILE" ]] && { cp "$ZONE_FILE" "$ZONE_FILE.bak"; had_zone=true; }
+  cat > "$ZONE_FILE" <<NGINX
+# ${SERVICE}: rate limit zone, used by ${NGINX_SNIPPET}
+limit_req_zone \$binary_remote_addr zone=${ZONE}:10m rate=10r/s;
+NGINX
+  cat > "$NGINX_SNIPPET" <<NGINX
+# ${SERVICE}: written by setup_service.sh in ${ROOT}
+location = ${BASE%/} { return 301 ${BASE}; }
+location ${BASE} {
+    limit_req zone=${ZONE} burst=40 nodelay;
+    limit_req_status 429;
+    client_max_body_size 32k;
+    proxy_pass http://127.0.0.1:${APP_PORT}/;
+    proxy_http_version 1.1;
+    proxy_set_header Host \$host;
+    proxy_set_header X-Forwarded-For \$remote_addr;
+    proxy_set_header X-Forwarded-Proto \$scheme;
+    proxy_set_header Connection "";
+    # Live updates are a long lived event stream
+    proxy_buffering off;
+    proxy_read_timeout 1h;
+}
+NGINX
+  if nginx -t 2>/tmp/${SERVICE}-nginx-test.log; then
+    rm -f "$NGINX_SNIPPET.bak" "$ZONE_FILE.bak"
+    systemctl reload nginx
+  else
+    cat /tmp/${SERVICE}-nginx-test.log >&2
+    if $had_snippet; then mv "$NGINX_SNIPPET.bak" "$NGINX_SNIPPET"; else rm -f "$NGINX_SNIPPET"; fi
+    if $had_zone; then mv "$ZONE_FILE.bak" "$ZONE_FILE"; else rm -f "$ZONE_FILE"; fi
+    echo "nginx -t failed, so the nginx files were put back as they were." >&2
+    exit 1
+  fi
 fi
 
 systemctl daemon-reload

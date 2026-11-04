@@ -80,14 +80,17 @@ Copy `.env.example` to `.env`. Never commit `.env`.
 
 | Setting | Default | What it does |
 | --- | --- | --- |
-| `REWRITER` | `fake` | `fake` (free, local) or `anthropic` (paid, needs `ANTHROPIC_API_KEY`) |
+| `REWRITER` | `fake` | `fake` (free, local), `anthropic` (paid, needs `ANTHROPIC_API_KEY`) or `azure` (paid, needs the `AZURE_OPENAI_*` settings) |
+| `AZURE_OPENAI_FALLBACK_*` | empty | A second Azure deployment, tried only if the first one fails |
 | `RETENTION_DAYS` | 30 | How long a closed or quiet conversation is kept |
 | `DRAFT_TTL_MINUTES` | 60 | How long an unsent preview lives |
 | `DAILY_REWRITE_CAP` | 2000 | Most rewrites per day across the whole service |
+| `DAILY_TOKEN_BUDGET` | 0 (off) | Most AI tokens per day. When it's used up, people are told kindly to come back tomorrow |
+| `RATE_REWRITES_PER_IP_PER_HOUR` | 60 | Rewrites per client address per hour |
 | `RATE_*` | see file | Per person and per client limits |
 | `LOG_MAX_BYTES`, `LOG_MAX_FILES` | 10 MB, 5 | Size limit for `logs/tactful.log` |
 
-`REWRITER=anthropic` makes real, paid API calls, one per rewrite, retry and edit check. It does nothing until you set it and add a key yourself.
+`REWRITER=anthropic` and `REWRITER=azure` make real, paid API calls, one per rewrite, retry and edit check. They do nothing until you set them and add a key yourself.
 
 ## Run it on a Linux server
 
@@ -104,6 +107,17 @@ journalctl -u tactful.service -f
 ```
 
 A size limited copy is also in `logs/tactful.log`. Logs never contain message text.
+
+### Behind an nginx you already run
+
+The app works under a path, such as `https://example.com/tactful/`. The script can write the nginx location for you instead of setting up Caddy:
+
+```bash
+sudo SERVICE_NAME=idea-tactful PORT=8601 BASE_PATH=/tactful/ \
+     NGINX_SNIPPET=/etc/nginx/max.d/tactful.conf ./setup_service.sh
+```
+
+It writes that one location file and a rate limit zone in `/etc/nginx/conf.d/`, runs `nginx -t`, and puts both back if the check fails. Your server block has to include the folder, for example `include /etc/nginx/max.d/*.conf;`. The service listens on 127.0.0.1 only. Logs: `journalctl -u idea-tactful -f`.
 
 ## Project layout
 

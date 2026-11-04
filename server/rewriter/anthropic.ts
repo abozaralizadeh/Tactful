@@ -15,6 +15,12 @@ Rules:
   {"outcome":"stopped","reason":"...","showSupport":true|false}  for threats, harassment, or anything suggesting someone may be in danger
 - "reason" is a short, kind note addressed to the sender.`;
 
+/** The user turn: topic and recent messages as context, the new message as data inside tags. */
+export function userPrompt(input: RewriteInput): string {
+  const context = input.recent.map((m) => `${m.who === 'sender' ? 'Sender' : 'Other person'}: ${m.text}`).join('\n');
+  return `Topic: ${input.topic}\n\nRecent messages:\n${context || '(none yet)'}\n\n<message>\n${input.original}\n</message>`;
+}
+
 type Fetch = typeof fetch;
 
 export class AnthropicRewriter implements Rewriter {
@@ -28,8 +34,7 @@ export class AnthropicRewriter implements Rewriter {
   ) {}
 
   async rewrite(input: RewriteInput): Promise<RewriteResult> {
-    const context = input.recent.map((m) => `${m.who === 'sender' ? 'Sender' : 'Other person'}: ${m.text}`).join('\n');
-    const user = `Topic: ${input.topic}\n\nRecent messages:\n${context || '(none yet)'}\n\n<message>\n${input.original}\n</message>`;
+    const user = userPrompt(input);
 
     const res = await this.doFetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',

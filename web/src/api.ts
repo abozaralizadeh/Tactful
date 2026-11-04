@@ -8,6 +8,7 @@ export class ApiError extends Error {
   }
 }
 
+// Paths are relative (api/...), so the app works at / and under a base path such as /tactful/.
 async function call<T>(method: string, path: string, token?: string, body?: unknown): Promise<T> {
   let res: Response;
   try {
@@ -51,15 +52,15 @@ export interface DraftReply {
 }
 
 export const api = {
-  start: (name: string, topic: string) => call<{ id: string; participantToken: string; inviteToken: string }>('POST', '/api/conversations', undefined, { name, topic }),
-  invite: (token: string) => call<{ topic: string; inviterName: string }>('GET', `/api/invites/${token}`),
-  join: (token: string, name: string) => call<{ id: string; participantToken: string }>('POST', `/api/invites/${token}/join`, undefined, { name, adult: true, consent: true }),
-  view: (id: string, t: string) => call<ConversationView>('GET', `/api/conversations/${id}`, t),
-  newInvite: (id: string, t: string) => call<{ inviteToken: string }>('POST', `/api/conversations/${id}/invite`, t),
-  close: (id: string, t: string) => call<void>('POST', `/api/conversations/${id}/close`, t),
-  draft: (id: string, t: string, text: string) => call<DraftReply>('POST', `/api/conversations/${id}/drafts`, t, { text }),
-  retry: (draftId: string, t: string) => call<DraftReply>('POST', `/api/drafts/${draftId}/retry`, t),
-  edit: (draftId: string, t: string, text: string) => call<DraftReply>('PATCH', `/api/drafts/${draftId}`, t, { text }),
-  send: (draftId: string, t: string) => call<{ message: Message }>('POST', `/api/drafts/${draftId}/send`, t),
-  cancel: (draftId: string, t: string) => call<void>('DELETE', `/api/drafts/${draftId}`, t),
+  start: (name: string, topic: string) => call<{ id: string; participantToken: string; inviteToken: string }>('POST', 'api/conversations', undefined, { name, topic }),
+  invite: (token: string) => call<{ topic: string; inviterName: string }>('GET', `api/invites/${token}`),
+  join: (token: string, name: string) => call<{ id: string; participantToken: string }>('POST', `api/invites/${token}/join`, undefined, { name, adult: true, consent: true }),
+  view: (id: string, t: string) => call<ConversationView>('GET', `api/conversations/${id}`, t),
+  newInvite: (id: string, t: string) => call<{ inviteToken: string }>('POST', `api/conversations/${id}/invite`, t),
+  close: (id: string, t: string) => call<void>('POST', `api/conversations/${id}/close`, t),
+  draft: (id: string, t: string, text: string) => call<DraftReply>('POST', `api/conversations/${id}/drafts`, t, { text }),
+  retry: (draftId: string, t: string) => call<DraftReply>('POST', `api/drafts/${draftId}/retry`, t),
+  edit: (draftId: string, t: string, text: string) => call<DraftReply>('PATCH', `api/drafts/${draftId}`, t, { text }),
+  send: (draftId: string, t: string) => call<{ message: Message }>('POST', `api/drafts/${draftId}/send`, t),
+  cancel: (draftId: string, t: string) => call<void>('DELETE', `api/drafts/${draftId}`, t),
 };

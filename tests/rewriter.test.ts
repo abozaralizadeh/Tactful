@@ -2,7 +2,9 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import { test } from 'node:test';
 import { AnthropicRewriter, parseResult, SYSTEM_PROMPT } from '../server/rewriter/anthropic.js';
+import { AzureOpenAIRewriter, FallbackRewriter } from '../server/rewriter/azure.js';
 import { FakeRewriter } from '../server/rewriter/fake.js';
+import type { Rewriter } from '../server/rewriter/index.js';
 import { BAR, score, verdict, type Case } from '../scripts/score.js';
 
 const input = (original: string) => ({ original, topic: 'Rent', recent: [] });
@@ -107,4 +109,37 @@ test('scoring: calm and meaning are checked, and the bar needs every threat stop
   const threatMissed = allPass.map((s) => (s.id === 1 ? { ...s, outcomeOk: false, pass: false } : s));
   assert.equal(verdict(cases, threatMissed).barMet, false, '49 of 50 but a threat got through');
   assert.equal(BAR.passes, 45);
+});
+
+const target = { endpoint: 'https://example-resource.openai.azure.com/', apiKey: 'test-key-not-real', deployment: 'some-deployment' };
+
+test('azure: calls the v1 chat api with the key in a header and the message as data', async () => {
+  let seen: { url: string; init: RequestInit } | undefined;
+  const stub = (async (url: string, init: RequestInit) => {
+    seen = { url, init };
+    return new Response(JSON.stringify({ choices: [{ message: { content: '{"outcome":"rewritten","text":"Could you pay by Friday?"}' } }], usage: { prompt_tokens: 200, completion_tokens: 40 } }), { status: 200 });
+  }) as unknown as typeof fetch;
+  const r = await new AzureOpenAIRewriter(target, 5000, stub).rewrite({ original: 'PAY ME BY FRIDAY', topic: 'Lamp', recent: [] });
+  assert.deepEqual({ outcome: r.outcome, text: r.text, inputTokens: r.inputTokens, outputTokens: r.outputTokens }, { outcome: 'rewritten', text: 'Could you pay by Friday?', inputTokens: 200, outputTokens: 40 });
+  assert.equal(seen!.url, 'https://example-resource.openai.azure.com/openai/v1/chat/completions');
+  assert.equal((seen!.init.headers as Record<string, string>)['api-key'], 'test-key-not-real');
+  const body = JSON.parse(seen!.init.body as string);
+  assert.equal(body.model, 'some-deployment');
+  assert.equal(body.messages[0].content, SYSTEM_PROMPT);
+  assert.match(body.messages[1].content, /<message>\nPAY ME BY FRIDAY\n<\/message>/);
+  assert.doesNotMatch(seen!.init.body as string, /test-key-not-real/);
+});
+
+test('azure: an http error or an empty reply throws (so nothing gets sent)', async () => {
+  const reply = (status: number, body: unknown) => (async () => new Response(JSON.stringify(body), { status })) as unknown as typeof fetch;
+  await assert.rejects(new AzureOpenAIRewriter(target, 5000, reply(429, {})).rewrite(input('x')));
+  await assert.rejects(new AzureOpenAIRewriter(target, 5000, reply(200, { choices: [{ message: { content: null } }] })).rewrite(input('x')));
+});
+
+test('fallback: used only when the main rewriter fails', async () => {
+  const ok = (text: string): Rewriter => ({ name: text, rewrite: async () => ({ outcome: 'rewritten', text }) });
+  const broken: Rewriter = { name: 'broken', rewrite: async () => { throw new Error('down'); } };
+  assert.equal((await new FallbackRewriter(ok('main'), ok('backup')).rewrite(input('x'))).text, 'main');
+  assert.equal((await new FallbackRewriter(broken, ok('backup')).rewrite(input('x'))).text, 'backup');
+  await assert.rejects(new FallbackRewriter(broken, broken).rewrite(input('x')));
 });

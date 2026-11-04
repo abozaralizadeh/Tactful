@@ -128,18 +128,21 @@ export function buildApp({ config, db, rewriter, logStream, clock }: AppDeps) {
 
   app.post('/api/conversations/:id/drafts', { schema: textBody }, async (req) => {
     const p = who(req);
+    limit(`rewrite-ip:${req.ip}`, config.ratePerIpRewritesPerHour, HOUR);
     limit(`draft:${p.id}`, config.rateDraftPerMinute, 60_000);
     return service.createDraft(p, (req.params as { id: string }).id, (req.body as { text: string }).text);
   });
 
   app.post('/api/drafts/:id/retry', async (req) => {
     const p = who(req);
+    limit(`rewrite-ip:${req.ip}`, config.ratePerIpRewritesPerHour, HOUR);
     limit(`draft:${p.id}`, config.rateDraftPerMinute, 60_000);
     return service.retryDraft(p, (req.params as { id: string }).id);
   });
 
   app.patch('/api/drafts/:id', { schema: textBody }, async (req) => {
     const p = who(req);
+    limit(`rewrite-ip:${req.ip}`, config.ratePerIpRewritesPerHour, HOUR);
     limit(`draft:${p.id}`, config.rateDraftPerMinute, 60_000);
     return service.editDraft(p, (req.params as { id: string }).id, (req.body as { text: string }).text);
   });

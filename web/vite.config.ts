@@ -3,6 +3,8 @@ import { defineConfig } from 'vite';
 
 export default defineConfig({
   root: 'web',
+  // Relative asset paths, so the built app also works under a base path such as /tactful/.
+  base: './',
   plugins: [react()],
   build: { outDir: '../dist/web', emptyOutDir: true },
   server: { port: 5173, proxy: { '/api': 'http://127.0.0.1:3000' } },

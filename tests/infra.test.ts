@@ -30,6 +30,13 @@ test('config reads settings and rejects bad ones', () => {
   assert.throws(() => loadConfig({ REWRITER: 'magic' }), /REWRITER/);
   assert.throws(() => loadConfig({ REWRITER: 'anthropic' }), /ANTHROPIC_API_KEY/);
   assert.equal(loadConfig({ REWRITER: 'anthropic', ANTHROPIC_API_KEY: 'k' }).rewriter, 'anthropic');
+  assert.throws(() => loadConfig({ REWRITER: 'azure' }), /AZURE_OPENAI_ENDPOINT/);
+  const az = loadConfig({ REWRITER: 'azure', AZURE_OPENAI_ENDPOINT: 'https://e', AZURE_OPENAI_API_KEY: 'k', AZURE_OPENAI_DEPLOYMENT: 'd' });
+  assert.equal(az.azureFallback, null);
+  assert.equal(loadConfig({ AZURE_OPENAI_FALLBACK_ENDPOINT: 'https://f', AZURE_OPENAI_FALLBACK_API_KEY: 'k', AZURE_OPENAI_FALLBACK_DEPLOYMENT: 'd' }).azureFallback?.deployment, 'd');
+  assert.equal(loadConfig({}).trustProxy, false);
+  assert.equal(loadConfig({ TRUST_PROXY: 'true' }).trustProxy, true);
+  assert.equal(loadConfig({ TRUST_PROXY: '127.0.0.1' }).trustProxy, '127.0.0.1');
 });
 
 test('rate limiter sweeps quiet keys', () => {

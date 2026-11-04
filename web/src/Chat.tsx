@@ -35,7 +35,7 @@ export function Chat({ id, token }: { id: string; token: string }) {
 
   useEffect(() => {
     load();
-    const es = new EventSource(`/api/conversations/${id}/events?t=${encodeURIComponent(token)}`);
+    const es = new EventSource(`api/conversations/${id}/events?t=${encodeURIComponent(token)}`);
     for (const ev of ['message', 'joined', 'closed']) es.addEventListener(ev, load);
     const poll = setInterval(load, 20_000); // in case the live connection drops
     return () => {
@@ -66,7 +66,7 @@ export function Chat({ id, token }: { id: string; token: string }) {
     if (preview) previewBox.current?.focus();
   }, [preview?.id]);
 
-  const inviteLink = invite ? `${window.location.origin}/#/join/${invite}` : '';
+  const inviteLink = invite ? `${window.location.origin}${window.location.pathname}#/join/${invite}` : '';
 
   function handle(r: DraftReply, keepText = true) {
     setEditing(null);

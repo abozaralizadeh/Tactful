@@ -64,3 +64,26 @@ test('long or odd input is refused', async () => {
   assert.equal(huge.statusCode, 413);
   await t.app.close();
 });
+
+test('rewrites are also limited per client address', async () => {
+  const t = makeApp({ config: { ratePerIpRewritesPerHour: 2 } });
+  const p = await pair(t);
+  assert.equal((await draft(t, p.id, p.alex, 'one two three four')).status, 200);
+  assert.equal((await draft(t, p.id, p.sam, 'one two three four')).status, 200);
+  // Same address, different person: still over
+  assert.equal((await draft(t, p.id, p.sam, 'one two three four')).status, 429);
+  await t.app.close();
+});
+
+test('the daily token budget stops rewrites with a kind message', async () => {
+  const counted = { name: 'counted', rewrite: async () => ({ outcome: 'rewritten' as const, text: 'Calm.', inputTokens: 300, outputTokens: 200 }) };
+  const t = makeApp({ config: { dailyTokenBudget: 1000 }, rewriter: counted });
+  const p = await pair(t);
+  assert.equal((await draft(t, p.id, p.alex, 'one two three four')).status, 200);
+  assert.equal((await draft(t, p.id, p.sam, 'one two three four')).status, 200);
+  const over = await draft(t, p.id, p.alex, 'one two three four');
+  assert.equal(over.status, 429);
+  assert.equal(over.body.error, 'daily_budget');
+  assert.match(over.body.message, /come back tomorrow/);
+  await t.app.close();
+});
